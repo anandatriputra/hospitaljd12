@@ -7,7 +7,6 @@ import id.co.indivara.jdt12.hospitalindivara.model.entity.Doctor;
 import java.util.List;
 
 public interface AppointmentService {
-    Appointment createAppointment (FormAppointment formAppointment);
+    FormAppointment createAppointment (FormAppointment formAppointment);
 
-//    List<Appointment> getAllScheduleDoctor ()
 }

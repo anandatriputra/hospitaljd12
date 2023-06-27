@@ -26,7 +26,7 @@ public class AppointmentServiceImplementation implements AppointmentService {
     SpecializationRepository specializationRepository;
 
     @Override
-    public Appointment createAppointment(FormAppointment formAppointment) {
+    public FormAppointment createAppointment(FormAppointment formAppointment) {
         Patient patient = patientRepository.findById(formAppointment.getPatientId()).orElseThrow(() -> new RuntimeException("Patient does not exist."));
         Specialization specialization = specializationRepository.findBySpecialistName(formAppointment.getSpecialistName());
         List<Doctor> doctors = doctorRepository.findAllBySpecializationAndDoctorReadyTrue(specialization);
@@ -40,6 +40,7 @@ public class AppointmentServiceImplementation implements AppointmentService {
                 registerStatus(false).
                 date(formAppointment.getDate()).
                 build();
-        return appointmentRepository.save(appointment);
+        appointmentRepository.save(appointment);
+        return formAppointment;
     }
 }

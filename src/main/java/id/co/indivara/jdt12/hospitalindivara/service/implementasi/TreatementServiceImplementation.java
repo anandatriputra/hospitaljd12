@@ -31,7 +31,6 @@ public class TreatementServiceImplementation implements TreatmentService {
     public Treatment updateTreatment(Treatment treatment, Integer id) {
         Treatment updateTreatment= treatmentRepository.findById(id).orElseThrow(() ->new NotFoundException("Treatment does not exist."));
         updateTreatment.setTypeOfTreatment(treatment.getTypeOfTreatment());
-        updateTreatment.setId(treatment.getId());
         updateTreatment.setDiagnosis(treatment.getDiagnosis());
         updateTreatment.setMedicine(treatment.getMedicine());
         return treatmentRepository.save(updateTreatment);

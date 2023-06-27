@@ -26,18 +26,18 @@ public class DoctorServiceImplementation implements DoctorService {
         Doctor updatedDoctor = doctorRepository.findById(id).orElse(null);
 
         if (updatedDoctor != null) {
-            updatedDoctor.setNameDoctor(doctor.getNameDoctor());
-            updatedDoctor.setAddress(updatedDoctor.getAddress());
-            updatedDoctor.setNumberPhone(doctor.getNumberPhone());
-            updatedDoctor.setDoctorReady(doctor.getDoctorReady());
+                updatedDoctor.setNameDoctor(doctor.getNameDoctor());
+                updatedDoctor.setAddress(updatedDoctor.getAddress());
+                updatedDoctor.setNumberPhone(doctor.getNumberPhone());
+                updatedDoctor.setDoctorReady(doctor.getDoctorReady());
 
-            return updatedDoctor;
+                return updatedDoctor;
         }
 
         throw new RuntimeException("Doctor does not exist.");
     }
-
     @Override
+
     public Doctor getIdDoctor(Integer id) {
 
         return doctorRepository.findById(id).get();

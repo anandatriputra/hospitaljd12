@@ -22,14 +22,13 @@ public class PatientServiceImplementation implements PatientService {
 
     @Override
     public Patient updatePatient(Patient patient, Integer id) {
-        Patient patDb = patientRepository.findById(id).orElseThrow(() -> new NotFoundException("Patient does not exist."));
-        patDb.setNamePatient(patient.getNamePatient());
-        patDb.setId(patient.getId());
-        patDb.setNumberPhone(patient.getNumberPhone());
-        patDb.setNumberKtp(patient.getNumberKtp());
-        patDb.setAddress(patient.getAddress());
-        patDb.setGender(patient.getGender());
-    return patientRepository.save(patDb);
+        Patient patient1 = patientRepository.findById(id).orElseThrow(() -> new NotFoundException("Patient does not exist."));
+        patient1.setNamePatient(patient.getNamePatient());
+        patient1.setNumberPhone(patient.getNumberPhone());
+        patient1.setNumberKtp(patient.getNumberKtp());
+        patient1.setAddress(patient.getAddress());
+        patient1.setGender(patient.getGender());
+    return patientRepository.save(patient);
     }
 
     @Override
