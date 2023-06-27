@@ -20,7 +20,8 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @PostMapping ("/createAppointment")
-    public ResponseEntity<Appointment>createAppointment(@RequestBody FormAppointment formAppointment){
-        return new ResponseEntity<>(appointmentService.createAppointment(formAppointment),HttpStatus.CREATED);
+    public ResponseEntity<FormAppointment>createAppointment(@RequestBody FormAppointment formAppointment){
+        FormAppointment appointment = appointmentService.createAppointment(formAppointment);
+        return new ResponseEntity<>(appointment,HttpStatus.CREATED);
     }
 }

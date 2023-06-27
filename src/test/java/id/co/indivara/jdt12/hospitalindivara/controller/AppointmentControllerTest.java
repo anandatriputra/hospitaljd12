@@ -1,71 +1,51 @@
-//package id.co.indivara.jdt12.hospitalindivara.controller;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import id.co.indivara.jdt12.hospitalindivara.model.dto.FormAppointment;
-//import id.co.indivara.jdt12.hospitalindivara.model.entity.Appointment;
-//import id.co.indivara.jdt12.hospitalindivara.model.entity.Doctor;
-//import id.co.indivara.jdt12.hospitalindivara.model.entity.Patient;
-//import id.co.indivara.jdt12.hospitalindivara.service.AppointmentService;
-//import org.aspectj.lang.annotation.Before;
-//import org.junit.jupiter.api.Test;
-//import org.junit.runner.RunWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.Mockito;
-//import org.mockito.junit.MockitoJUnitRunner;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-//
-//import java.util.Date;
-//
-//import static org.springframework.http.RequestEntity.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//
-//@RunWith(MockitoJUnitRunner.class)
-// class AppointmentControllerTest {
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Mock
-//    private AppointmentService appointmentService;
-//
-//    @InjectMocks
-//    private AppointmentController appointmentController;
-//
-//    @Before("")
-//    public void setUp() {
-//        mockMvc = MockMvcBuilders.standaloneSetup(appointmentController).build();
-//    }
-//
-//    @Test
-//    public void testCreateAppointment() throws Exception {
-//        // Mock data
-//        FormAppointment formAppointment = new FormAppointment();
-//        formAppointment.setPatientId(1);
-//        formAppointment.setSpecialistName("kulit");
-//        formAppointment.setComplaint("bintik merah");
-//
-//        Appointment appointment = new Appointment();
-//        appointment.setPatient(new Patient(5,"tegar","3237243","jalan gebras","laki-laki","85473554"));
-//        appointment.setDoctor(new Doctor(5,new));
-//        appointment.setComplaint("Complaint");
-//        appointment.setRegisterStatus(false);
-//
-//
-//        // Mock service response
-//        Mockito.when(appointmentService.createAppointment(Mockito.any(FormAppointment.class)))
-//                .thenReturn(appointment);
-//
-//        // Perform the POST request
-//        mockMvc.perform(MockMvcRequestBuilders.post("/appointment/createAppointment")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(formAppointment)))
-//                .andExpect(status().isOk());
-//    }
-//
-//}
+package id.co.indivara.jdt12.hospitalindivara.controller;
+import id.co.indivara.jdt12.hospitalindivara.controller.AppointmentController;
+import id.co.indivara.jdt12.hospitalindivara.model.dto.FormAppointment;
+import id.co.indivara.jdt12.hospitalindivara.service.AppointmentService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class AppointmentControllerTest {
+
+    @Mock
+    private AppointmentService appointmentService;
+
+    @InjectMocks
+    private AppointmentController appointmentController;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void createAppointment_ReturnsCreatedStatus() {
+        // Arrange
+        FormAppointment formAppointment = new FormAppointment();
+        // Set up any necessary fields in formAppointment
+
+        FormAppointment createdAppointment = new FormAppointment();
+        // Set up any expected fields in createdAppointment
+
+        when(appointmentService.createAppointment(formAppointment)).thenReturn(createdAppointment);
+
+        // Act
+        ResponseEntity<FormAppointment> response = appointmentController.createAppointment(formAppointment);
+
+        // Assert
+        verify(appointmentService, times(1)).createAppointment(formAppointment);
+        verifyNoMoreInteractions(appointmentService);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(createdAppointment, response.getBody());
+    }
+}
